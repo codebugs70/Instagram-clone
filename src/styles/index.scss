@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "reset";
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-black text-white;
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-lg px-5;
+  }
+}
