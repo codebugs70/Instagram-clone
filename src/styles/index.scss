@@ -17,4 +17,9 @@
   .page-container {
     @apply mx-auto w-full max-w-lg px-5;
   }
+  .img-cover {
+    @apply w-full h-full object-cover;
+  }
 }
+
+/* ==================================================== */
