@@ -4,10 +4,15 @@ import { Fragment } from "react";
 import PropTypes from "prop-types";
 import UserAvatar from "../user/UserAvatar";
 import { IoMdShareAlt } from "react-icons/io";
-import { BiImageAdd } from "react-icons/bi";
+import PostUpload from "../post/PostUpload";
+import useUploadImages from "../../hooks/useUploadImages";
+import PostImages from "../post/PostImages";
+import Loading from "../../components/loading/Loading";
 /* ====================================================== */
 
 const CreatePostModal = ({ isOpen, onClose }) => {
+  const { images, setImages, loading, handleSelectImage } = useUploadImages();
+
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -34,7 +39,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className=" w-full max-w-[910px]  transition-all rounded-md shadow-xl ">
+              <Dialog.Panel className=" w-full  max-w-[910px]  transition-all rounded-md shadow-xl ">
                 <section className="flex items-center justify-between p-3 text-lg font-semibold bg-white border-b border-slate-600 rounded-tl-md rounded-tr-md dark:bg-SlateGray">
                   <h1 className="text-black dark:text-white">
                     Create new post
@@ -45,26 +50,18 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                   </div>
                 </section>
 
-                <section className="grid grid-cols-[minmax(567px,_auto)_1fr] bg-white dark:bg-SlateGray rounded-bl-md rounded-br-md">
-                  <div className="w-[567px] h-[567px] flex items-center justify-center">
-                    <label
-                      htmlFor="choose-image"
-                      className="flex flex-col items-center border-MidnightSlate dark:border-white justify-center gap-4 border border-dashed dark:hover:bg-white hover:bg-[#eee] dark:hover:bg-opacity-10 transition-all cursor-pointer rounded-full w-[200px] h-[200px]"
-                    >
-                      <BiImageAdd className="text-4xl" />
-                      <p>Choose Images</p>
-                      <input
-                        type="file"
-                        id="choose-image"
-                        className="hidden-input "
-                      />
-                    </label>
+                <section className="grid min-h-[567px] grid-cols-[minmax(567px,_auto)_1fr] bg-white dark:bg-SlateGray rounded-bl-md rounded-br-md">
+                  <div className="flex items-center justify-center">
+                    {loading && <Loading />}
+
+                    {!loading && images.length === 0 && (
+                      <PostUpload onChange={handleSelectImage} />
+                    )}
+
+                    {!loading && images.length > 0 && (
+                      <PostImages images={images} />
+                    )}
                   </div>
-                  {/* <img
-                    className="w-[567px] h-[567px] rounded-bl-md"
-                    src="https://source.unsplash.com/random"
-                    alt="post-image"
-                  /> */}
 
                   <div className="w-full p-3 border-l border-slate-600">
                     <div className="flex items-center gap-2">
