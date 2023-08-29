@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -9,6 +10,8 @@ export default {
         SlateGray: "#262626",
         BlueForst: "#0095f6",
         ElectricBlue: "#1877F2",
+        MarineBlue: "#0061a0",
+        MidnightSlate: "#283943",
         RaspberryRed: "#ed4956",
 
         text_3: "#808191",

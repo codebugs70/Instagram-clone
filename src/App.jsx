@@ -1,40 +1,18 @@
-import { useDispatch } from "react-redux";
-import { Suspense, lazy, useEffect } from "react";
-import { setCurrentUser } from "./redux/features/userSlice";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { auth, db } from "./utils/firebase";
+import { Suspense, lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+import MainLayout from "./components/layouts/MainLayout";
+import SecondLayout from "./components/layouts/SecondLayout";
 /* ====================================================== */
 const Signup = lazy(() => import("./pages/Signup"));
 const Signin = lazy(() => import("./pages/Signin"));
+const Search = lazy(() => import("./pages/Search"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Notification = lazy(() => import("./pages/Notification"));
 const Home = lazy(() => import("./pages/Home"));
+const Explore = lazy(() => import("./pages/Explore"));
 /* ====================================================== */
 
 function App() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userDocRef = query(
-          collection(db, "users"),
-          where("email", "==", user.email)
-        );
-        const snapshot = await getDocs(userDocRef);
-        snapshot.forEach((docRef) => {
-          const data = docRef.data();
-          if (data) {
-            dispatch(setCurrentUser({ ...data }));
-          }
-        });
-      } else {
-        navigate("/sign-up");
-      }
-    });
-  }, [dispatch, navigate]);
-
   return (
     <Suspense
       fallback={
@@ -44,9 +22,19 @@ function App() {
       }
     >
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<Signin />} />
         <Route path="/sign-up" element={<Signup />} />
+
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+        </Route>
+
+        <Route element={<SecondLayout />}>
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/notification" element={<Notification />} />
+          <Route path={`/:slug`} element={<Profile />} />
+        </Route>
       </Routes>
     </Suspense>
   );

@@ -1,32 +1,29 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Button from "../components/button/Button";
-import { signOut } from "firebase/auth";
-import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import PostItem from "../modules/post/PostItem";
+/* ====================================================== */
 
 const Home = () => {
   const navigate = useNavigate();
-
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  // console.log(currentUser);
 
-  const Signout = () => {
-    signOut(auth);
-    navigate("/sign-up");
-  };
+  // const Signout = () => {
+  //   signOut(auth);
+  //   navigate("/sign-up");
+  // };
 
   return (
-    <div className="p-5">
-      <h1>{currentUser.username}</h1>
-      <div className="w-[40px] h-[40px]">
-        <img src={currentUser.photoURL} alt="" className="img-cover" />
-      </div>
-
-      <Button onClick={Signout} className="mt-5">
-        Sign out
-      </Button>
-    </div>
+    <main className="w-full max-w-[470px] mx-auto">
+      <ul className="flex flex-col gap-5">
+        {Array(5)
+          .fill(0)
+          .map((item, index) => (
+            <PostItem key={index} />
+          ))}
+      </ul>
+    </main>
   );
 };
 

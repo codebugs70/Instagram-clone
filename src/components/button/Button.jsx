@@ -16,7 +16,7 @@ const Button = ({
       case "primary":
         return "bg-BlueForst hover:bg-ElectricBlue text-white";
       case "secondary":
-        return "bg-white hover:bg-opacity-80 text-black";
+        return "dark:bg-white dark:hover:bg-opacity-80 hover:bg-opacity-80 bg-blue-500 text-white dark:text-black";
       case "bordered":
         return "border-BlueForst border hover:border-transparent hover:bg-ElectricBlue text-ElectricBlue hover:text-white";
 
@@ -28,7 +28,7 @@ const Button = ({
   const getSizeClass = () => {
     switch (size) {
       case "small":
-        return "py-3 px-5";
+        return "py-2 px-4";
       case "normal":
         return "px-5 h-[48px]";
       case "big":

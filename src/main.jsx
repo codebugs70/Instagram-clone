@@ -7,13 +7,19 @@ import { BrowserRouter } from "react-router-dom";
 import "./styles/index.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthProvider } from "./context/auth-context.jsx";
+import { ThemeProvider } from "./context/theme-context.jsx";
 /* ====================================================== */
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
-      <ToastContainer />
+      <AuthProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+        <ToastContainer />
+      </AuthProvider>
     </Provider>
   </BrowserRouter>
 );
