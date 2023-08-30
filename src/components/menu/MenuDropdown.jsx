@@ -8,11 +8,21 @@ import { MdOutlineContactSupport } from "react-icons/md";
 import { Fragment } from "react";
 import { AiOutlineBars } from "react-icons/ai";
 import { useTheme } from "../../context/theme-context";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../utils/firebase";
+import { signOut } from "firebase/auth";
 
 /* ====================================================== */
 
 const MenuDropdown = () => {
+  const navigate = useNavigate();
   const { darkMode, toggleDarkMode } = useTheme();
+
+  const handleSignout = () => {
+    console.log("asdhasd");
+    signOut(auth);
+    navigate("/sign-in");
+  };
 
   const links = [
     { label: "Settings", icon: <AiOutlineSetting /> },
@@ -22,8 +32,11 @@ const MenuDropdown = () => {
       icon: darkMode ? <FaMoon /> : <BsSun />,
       onClick: toggleDarkMode,
     },
-    { label: "Support", icon: <MdOutlineContactSupport /> },
-    { label: "Sign out", icon: <BiLogOut /> },
+    {
+      label: "Support",
+      icon: <MdOutlineContactSupport />,
+    },
+    { label: "Sign out", icon: <BiLogOut />, onClick: handleSignout },
   ];
 
   return (

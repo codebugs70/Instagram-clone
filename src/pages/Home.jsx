@@ -7,12 +7,7 @@ import PostItem from "../modules/post/PostItem";
 const Home = () => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
-  // console.log(currentUser);
-
-  // const Signout = () => {
-  //   signOut(auth);
-  //   navigate("/sign-up");
-  // };
+  console.log(currentUser);
 
   return (
     <main className="w-full max-w-[470px] mx-auto">

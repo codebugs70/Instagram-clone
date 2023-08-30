@@ -31,7 +31,7 @@ function AuthProvider(props) {
           }
         });
       } else {
-        navigate("/sign-up");
+        dispatch(setCurrentUser(null));
       }
     });
   }, [dispatch, navigate]);

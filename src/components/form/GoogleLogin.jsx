@@ -46,7 +46,7 @@ const GoogleLogin = () => {
   return (
     <div
       onClick={googleLogin}
-      className="flex items-center gap-2 p-3 border rounded-md cursor-pointer hover:bg-SlateGray border-text_3"
+      className="flex items-center gap-2 p-3 border rounded-md cursor-pointer hover:bg-slate-100 dark:hover:bg-SlateGray border-text_3"
     >
       <span className="text-2xl">
         <FcGoogle />

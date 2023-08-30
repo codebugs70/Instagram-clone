@@ -63,7 +63,7 @@ const Signin = () => {
 
   return (
     <section className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-sm p-5 mx-auto rounded-md md:max-w-lg bg-Charcoal">
+      <div className="w-full max-w-sm p-5 mx-auto bg-white rounded-md shadow-lg md:max-w-lg border-2 border-[#eee] dark:bg-Charcoal">
         <div className="w-[50px] h-[50px]">
           <img className="img-cover" src="/logo.png" alt="instagram-logo" />
         </div>
