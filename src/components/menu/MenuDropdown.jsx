@@ -11,15 +11,17 @@ import { useTheme } from "../../context/theme-context";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../utils/firebase";
 import { signOut } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../redux/features/userSlice";
 
 /* ====================================================== */
 
 const MenuDropdown = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { darkMode, toggleDarkMode } = useTheme();
 
   const handleSignout = () => {
-    console.log("asdhasd");
     signOut(auth);
     navigate("/sign-in");
   };

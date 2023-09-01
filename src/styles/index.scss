@@ -26,6 +26,9 @@
   .loadingSpin {
     @apply border-white flex items-center justify-center mx-auto bg-transparent border-4 border-t-[10px] border-t-transparent rounded-full animate-spin w-[100px] h-[100px];
   }
+  .icon-image {
+    @apply flex items-center justify-center transition-all hover:bg-black hover:text-white cursor-pointer text-xl text-white bg-black bg-opacity-50 w-[40px] h-[40px] rounded-full;
+  }
 }
 
 /* ==================================================== */

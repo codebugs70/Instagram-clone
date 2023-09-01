@@ -1,18 +1,24 @@
 import React from "react";
 import Button from "../../components/button/Button";
-import UserItem from "../../modules/user/UserItem";
+import UserItem, { UserItemSkeleton } from "../../modules/user/UserItem";
+import useFetchCollection from "../../hooks/useFetchCollection";
+import { v4 } from "uuid";
 
 const RightSidebar = () => {
+  const { data: users, isLoading } = useFetchCollection("users");
+
   return (
     <section className="w-[320px] bg-white h-fit dark:bg-black sticky top-10 py-4 px-2 shadow-md rounded-sm">
       <h1 className="text-lg font-semibold text-text_3">Suggested for you</h1>
 
       <ul className="flex flex-col gap-5 mt-5">
-        {Array(6)
-          .fill(0)
-          .map((item, index) => (
-            <UserItem key={index} />
-          ))}
+        {isLoading &&
+          Array(6)
+            .fill(0)
+            .map(() => <UserItemSkeleton key={v4()} />)}
+
+        {!isLoading &&
+          users.map((user) => <UserItem key={user.userId} data={user} />)}
       </ul>
 
       <Button className="w-full mt-5" size="normal" variant="primary">

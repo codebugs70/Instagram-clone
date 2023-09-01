@@ -51,7 +51,11 @@ const Button = ({
         isLoading ? "opacity-50 cursor-not-allowed" : ""
       } font-medium rounded-md`}
     >
-      {isLoading ? <Loading /> : children}
+      {isLoading ? (
+        <Loading borderSize="border-2 border-t-2" size="w-[20px] h-[20px]" />
+      ) : (
+        children
+      )}
     </button>
   );
 };

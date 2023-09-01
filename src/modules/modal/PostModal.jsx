@@ -1,24 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../utils/firebase";
+import { toastOptions } from "../../constant";
+import Loading from "../../components/loading/Loading";
+import { setPostData } from "../../redux/features/postSlice";
+import UpdatePostModal from "./UpdatePostModal";
+import useToggle from "../../hooks/useToggle";
 /* ====================================================== */
 
-const PostModal = ({ isOpen, onClose }) => {
+const PostModal = ({ isOpen, onClose, postData }) => {
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
+  const { toggle: showModal, handleToggle: handleShowModal } = useToggle();
+  const [isLoading, setIsLoading] = useState(false);
+  if (!postData) return null;
+
+  // Delete post
+  const handleDeletePost = async (postId) => {
+    if (!postId) return;
+    setIsLoading(true);
+
+    try {
+      const postDocRef = doc(db, "posts", postId);
+      await deleteDoc(postDocRef);
+
+      setIsLoading(false);
+      onClose();
+      toast.success("Post deleted!", toastOptions);
+    } catch (error) {
+      console.log("Error deleting post: ", error);
+    }
+  };
+
+  // Toggle update modal
+  const toggleUpdate = (data) => {
+    if (!data) return;
+    handleShowModal();
+    dispatch(setPostData(data));
+    onClose();
+  };
+
+  // Post options
   const postOptions = [
-    { title: "Got to post", onClick: () => {} },
-    { title: "Update", onClick: () => {} },
-    { title: "Delete", onClick: () => {} },
+    { title: "Go to post", onClick: () => {} },
+    ...(currentUser?.userId === postData?.userId
+      ? [
+          { title: "Update", onClick: () => toggleUpdate(postData) },
+          {
+            title: "Delete",
+            onClick: () => handleDeletePost(postData?.postId),
+          },
+        ]
+      : []),
     {
       title: "Report",
       onClick: () => {
-        toast.error("Nothing happened!", {
-          position: "top-center",
-          theme: "dark",
-          autoClose: 2000,
-          pauseOnHover: false,
-        });
+        toast.error("Nothing happened!", toastOptions);
       },
       color: "text-RaspberryRed",
     },
@@ -26,7 +68,7 @@ const PostModal = ({ isOpen, onClose }) => {
   ];
 
   return (
-    <>
+    <section>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={onClose}>
           <Transition.Child
@@ -64,7 +106,14 @@ const PostModal = ({ isOpen, onClose }) => {
                           } w-full py-5 font-medium text-center cursor-pointer hover:bg-[#eee]  dark:hover:bg-white dark:hover:bg-opacity-5`}
                           key={item.title}
                         >
-                          {item.title}
+                          {isLoading ? (
+                            <Loading
+                              borderSize="border-2 border-t-2"
+                              size="w-[20px] h-[20px]"
+                            />
+                          ) : (
+                            item.title
+                          )}
                         </li>
                       );
                     })}
@@ -75,13 +124,22 @@ const PostModal = ({ isOpen, onClose }) => {
           </div>
         </Dialog>
       </Transition>
-    </>
+
+      <UpdatePostModal isOpen={showModal} onClose={handleShowModal} />
+    </section>
   );
 };
 
 PostModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  postData: PropTypes.shape({
+    createdAt: PropTypes.object.isRequired,
+    postId: PropTypes.string.isRequired,
+    postImages: PropTypes.arrayOf(PropTypes.string).isRequired,
+    content: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+  }),
 };
 
 export default PostModal;

@@ -1,15 +1,14 @@
 import React from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
+import Skeleton from "../../components/loading/Skeleton";
 
-const PostPreviewItem = () => {
+const PostPreviewItem = ({ data }) => {
+  if (!data) return null;
+
   return (
     <div className="relative transition-all rounded-md aspect-square group">
-      <img
-        src="https://source.unsplash.com/random"
-        className="rounded-md img-cover"
-        alt=""
-      />
+      <img src={data?.postImages[0]} className="rounded-md img-cover" alt="" />
 
       {/* overlay */}
       <div className="absolute inset-0 transition-all rounded-md hover:bg-black hover:bg-opacity-50"></div>
@@ -26,6 +25,10 @@ const PostPreviewItem = () => {
       </div>
     </div>
   );
+};
+
+export const PostPreviewItemSkeleton = () => {
+  return <Skeleton className="rounded-md aspect-square"></Skeleton>;
 };
 
 export default PostPreviewItem;

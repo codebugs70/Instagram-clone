@@ -1,10 +1,15 @@
-import React, { useState } from "react";
 import UserAvatar from "../modules/user/UserAvatar";
+import useQuerySnapshot from "../hooks/useQuerySnapshot";
+import useQueryCollection from "../hooks/useQueryCollection";
+import React, { useState } from "react";
+import PostPreviewItem, {
+  PostPreviewItemSkeleton,
+} from "../modules/post/PostPreviewItem";
 import Button from "../components/button/Button";
+import { useParams } from "react-router-dom";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { BsBookmarkPlus } from "react-icons/bs";
-import PostPreviewItem from "../modules/post/PostPreviewItem";
-import { useParams } from "react-router-dom";
+import { v4 } from "uuid";
 /* ====================================================== */
 
 const tabOptions = [
@@ -14,17 +19,22 @@ const tabOptions = [
 
 const Profile = () => {
   const { slug } = useParams();
-  console.log(slug);
   const [selected, setSelected] = useState("Posts");
+  const { data: user } = useQuerySnapshot("users", "slug", slug);
+  const { data: posts, isLoading } = useQueryCollection(
+    "posts",
+    "userId",
+    user?.userId
+  );
 
   return (
     <section className="px-6">
       <div className="flex items-start gap-14">
-        <UserAvatar size="lg" avatar={"https://source.unsplash.com/random"} />
+        <UserAvatar size="lg" avatar={user?.photoURL} />
 
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-6">
-            <h1 className="text-lg">Codebugs</h1>
+            <h1 className="text-lg">{user?.username}</h1>
             <Button className="text-sm" size="small" variant="secondary">
               Edit profile
             </Button>
@@ -45,7 +55,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <p>@Codebugs</p>
+          <p>{`@${user?.slug}`}</p>
         </div>
       </div>
 
@@ -72,11 +82,14 @@ const Profile = () => {
 
       <div className="my-10">
         <ul className="grid grid-cols-3 gap-1">
-          {Array(6)
-            .fill(0)
-            .map((item, index) => (
-              <PostPreviewItem key={index} />
-            ))}
+          {isLoading &&
+            Array(9)
+              .fill(0)
+              .map(() => <PostPreviewItemSkeleton key={v4()} />)}
+
+          {!isLoading &&
+            posts.length > 0 &&
+            posts.map((post) => <PostPreviewItem key={v4()} data={post} />)}
         </ul>
       </div>
     </section>

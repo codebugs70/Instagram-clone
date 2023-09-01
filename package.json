@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^3.3.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@tailwindcss/line-clamp": "^0.4.4",
+    "date-fns": "^2.30.0",
     "firebase": "^10.3.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

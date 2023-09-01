@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { profileImage } from "../../constant";
 
 const UserAvatar = ({ avatar, className = "", size = "" }) => {
   let avatarSize = "";
@@ -24,7 +25,11 @@ const UserAvatar = ({ avatar, className = "", size = "" }) => {
 
   return (
     <div className={`${className} ${avatarSize} flex-shrink-0`}>
-      <img src={avatar} className="rounded-full img-cover" alt="user-avatar" />
+      <img
+        src={avatar || profileImage}
+        className="rounded-full img-cover"
+        alt="user-avatar"
+      />
     </div>
   );
 };

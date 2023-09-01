@@ -9,10 +9,6 @@ import Loading from "../loading/Loading";
 const MainLayout = () => {
   const { currentUser } = useSelector((state) => state.user);
 
-  if (!currentUser) {
-    return <Loading />;
-  }
-
   return (
     <section>
       <div className="flex items-start justify-between">

@@ -1,4 +1,3 @@
-import slugify from "slugify";
 import React from "react";
 import Input from "../components/form/Input";
 import GoogleLogin from "../components/form/GoogleLogin";
@@ -8,9 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { SigninValidationSchema } from "../utils/valdition";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../utils/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
 /* ====================================================== */
 
 const Signin = () => {
@@ -18,7 +16,6 @@ const Signin = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: yupResolver(SigninValidationSchema),
@@ -32,21 +29,7 @@ const Signin = () => {
   const Signup = async (data) => {
     if (!isValid) return;
     try {
-      createUserWithEmailAndPassword(auth, data.email, data.password);
-      const currentUser = auth.currentUser;
-
-      const userRef = collection(db, "users");
-      await addDoc(userRef, {
-        userId: currentUser.uid,
-        slug: slugify(data.username, { lower: true }),
-        photoURL: "https://i.imgur.com/2LDUDB6.jpeg",
-        ...data,
-      });
-
-      reset({
-        email: "",
-        password: "",
-      });
+      await signInWithEmailAndPassword(auth, data.email, data.password);
 
       toast.success("Welcome to instagram !", {
         position: "top-center",
@@ -63,7 +46,7 @@ const Signin = () => {
 
   return (
     <section className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-sm p-5 mx-auto bg-white rounded-md shadow-lg md:max-w-lg border-2 border-[#eee] dark:bg-Charcoal">
+      <div className="w-full max-w-sm p-5 mx-auto bg-white rounded-md shadow-lg md:max-w-lg border-2 border-[#eee] dark:bg-Charcoal dark:border-none">
         <div className="w-[50px] h-[50px]">
           <img className="img-cover" src="/logo.png" alt="instagram-logo" />
         </div>
@@ -106,7 +89,7 @@ const Signin = () => {
             disabled={isSubmitting}
             isLoading={isSubmitting}
           >
-            Sign up
+            Sign in
           </Button>
         </form>
       </div>

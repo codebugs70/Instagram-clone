@@ -83,7 +83,7 @@ const LeftSidebar = () => {
           })}
 
           <NavLink
-            to={`/${currentUser.slug}`}
+            to={`/${currentUser?.slug}`}
             className={({ isActive }) =>
               `${
                 isActive
@@ -92,12 +92,9 @@ const LeftSidebar = () => {
               } flex items-center gap-3 p-[12px] transition-all rounded-md cursor-pointer `
             }
           >
-            <UserAvatar
-              size="xs"
-              avatar={"https://source.unsplash.com/random"}
-            />
+            <UserAvatar size="xs" avatar={currentUser?.photoURL} />
             <span className="text-base font-semibold">
-              {currentUser.username}
+              {currentUser?.username}
             </span>
           </NavLink>
         </ul>

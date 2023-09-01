@@ -6,6 +6,8 @@ import { Navigation } from "swiper/modules";
 import { v4 } from "uuid";
 import { Menu, Transition } from "@headlessui/react";
 import { BsImages, BsSquare } from "react-icons/bs";
+import { BiImageAdd } from "react-icons/bi";
+import { IoMdClose } from "react-icons/io";
 import { IoResizeOutline } from "react-icons/io5";
 import PropTypes from "prop-types";
 /* ====================================================== */
@@ -15,8 +17,14 @@ const options = [
   { label: "1:1", icon: <BsSquare /> },
 ];
 
-const PostImages = ({ images = [] }) => {
+const PostDisplayImages = ({ images = [], onChange = () => {}, setImages }) => {
   const [imageSize, setImageSize] = useState("1:1");
+
+  const handleDeleteImage = (url) => {
+    if (!url) return;
+    const filterImage = images.filter((item) => item !== url);
+    setImages([...filterImage]);
+  };
 
   if (!images) return null;
   return (
@@ -39,8 +47,34 @@ const PostImages = ({ images = [] }) => {
               src={item}
               alt="post-image"
             />
+
+            <div className="absolute top-2 right-2">
+              <span
+                onClick={() => handleDeleteImage(item)}
+                className="icon-image"
+              >
+                <IoMdClose></IoMdClose>
+              </span>
+            </div>
+
+            {/* image options */}
             <div className="absolute w-full bottom-2 left-2">
-              <OptionDropdown setImageSize={setImageSize} />
+              <div className="flex items-center gap-4">
+                <OptionDropdown setImageSize={setImageSize} />
+                <label
+                  htmlFor="choose-image"
+                  className="icon-image text-[22px]"
+                >
+                  <BiImageAdd />
+                  <input
+                    onChange={onChange}
+                    type="file"
+                    id="choose-image"
+                    className="hidden-input "
+                    multiple
+                  />
+                </label>
+              </div>
             </div>
           </SwiperSlide>
         ))}
@@ -48,17 +82,19 @@ const PostImages = ({ images = [] }) => {
   );
 };
 
-PostImages.propTypes = {
+PostDisplayImages.propTypes = {
   images: PropTypes.arrayOf(PropTypes.string),
+  onChange: PropTypes.func,
+  setImages: PropTypes.func,
 };
 
-export default PostImages;
+export default PostDisplayImages;
 
 function OptionDropdown({ setImageSize }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button>
-        <span className="flex items-center justify-center cursor-pointer text-xl text-white bg-black bg-opacity-50 w-[40px] h-[40px] rounded-full">
+        <span className="icon-image">
           <IoResizeOutline />
         </span>
       </Menu.Button>

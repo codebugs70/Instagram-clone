@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db } from "../../utils/firebase";
 /* ====================================================== */
 
@@ -27,6 +27,7 @@ const GoogleLogin = () => {
           slug: slugify(data.displayName, { lower: true }),
           email: data.email,
           photoURL: data.photoURL,
+          createdAt: serverTimestamp(),
         });
       }
 

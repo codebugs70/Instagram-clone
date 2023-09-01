@@ -1,22 +1,26 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import PostItem from "../modules/post/PostItem";
+import PostItem, { PostItemSkeleton } from "../modules/post/PostItem";
+import useFetchCollection from "../hooks/useFetchCollection";
+import { v4 } from "uuid";
 /* ====================================================== */
 
 const Home = () => {
-  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  const { data: posts, isLoading } = useFetchCollection("posts");
+  // console.log(currentUser);
 
   return (
     <main className="w-full max-w-[470px] mx-auto">
       <ul className="flex flex-col gap-5">
-        {Array(5)
-          .fill(0)
-          .map((item, index) => (
-            <PostItem key={index} />
-          ))}
+        {isLoading &&
+          Array(6)
+            .fill(0)
+            .map(() => <PostItemSkeleton key={v4()} />)}
+
+        {!isLoading &&
+          posts.length > 0 &&
+          posts.map((post) => <PostItem key={v4()} data={post} />)}
       </ul>
     </main>
   );

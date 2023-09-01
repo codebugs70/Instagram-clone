@@ -10,7 +10,8 @@ import { toast } from "react-toastify";
 import { SignupValidationSchema } from "../utils/valdition";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../utils/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { profileImage } from "../constant";
 /* ====================================================== */
 
 const Signup = () => {
@@ -40,7 +41,8 @@ const Signup = () => {
       await addDoc(userRef, {
         userId: currentUser.uid,
         slug: slugify(data.username, { lower: true }),
-        photoURL: "https://i.imgur.com/2LDUDB6.jpeg",
+        photoURL: profileImage,
+        createdAt: serverTimestamp(),
         ...data,
       });
 
@@ -65,7 +67,7 @@ const Signup = () => {
 
   return (
     <section className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-sm p-5 mx-auto bg-white rounded-md md:max-w-lg border-2 border-[#eee]  shadow-lg dark:bg-Charcoal">
+      <div className="w-full max-w-sm p-5 mx-auto bg-white rounded-md md:max-w-lg border-2 border-[#eee]  shadow-lg dark:bg-Charcoal dark:border-none">
         <div className="w-[50px] h-[50px]">
           <img className="img-cover" src="/logo.png" alt="instagram-logo" />
         </div>
