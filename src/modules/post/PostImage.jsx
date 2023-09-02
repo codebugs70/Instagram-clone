@@ -7,7 +7,10 @@ import "swiper/css/navigation";
 import "swiper/css";
 /* ====================================================== */
 
-const PostImage = ({ images = [] }) => {
+const PostImage = ({
+  images = [],
+  className = "w-full h-full rounded-sm img-cover",
+}) => {
   return (
     <Swiper
       slidesPerView={"auto"}
@@ -19,11 +22,7 @@ const PostImage = ({ images = [] }) => {
       {images.length > 0 &&
         images.map((item) => (
           <SwiperSlide key={v4()}>
-            <img
-              className="w-full h-full rounded-sm img-cover"
-              src={item}
-              alt="post-image"
-            />
+            <img className={`${className}`} src={item} alt="post-image" />
           </SwiperSlide>
         ))}
     </Swiper>
@@ -32,6 +31,7 @@ const PostImage = ({ images = [] }) => {
 
 PostImage.propTypes = {
   images: PropTypes.arrayOf(PropTypes.string),
+  className: PropTypes.string,
 };
 
 export default PostImage;

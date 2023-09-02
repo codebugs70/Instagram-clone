@@ -5,13 +5,17 @@ export const postSlice = createSlice({
   initialState: {
     post: [],
     postData: {},
+    cmtData: {},
   },
   reducers: {
     setPostData: (state, action) => {
       state.postData = action.payload;
     },
+    setCmtData: (state, action) => {
+      state.cmtData = action.payload;
+    },
   },
 });
 
-export const { setPostData } = postSlice.actions;
+export const { setPostData, setCmtData } = postSlice.actions;
 export default postSlice.reducer;

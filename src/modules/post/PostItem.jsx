@@ -39,10 +39,7 @@ const PostItem = ({ data }) => {
           </div>
 
           {/* Option icon */}
-          <span
-            onClick={handleShowModal}
-            className="text-lg flex items-center justify-center w-[35px] h-[35px] hover:bg-[#ccc] dark:hover:bg-SlateGray rounded-full cursor-pointer"
-          >
+          <span onClick={handleShowModal} className="icon-post-setting">
             <BsThreeDots />
           </span>
         </section>
@@ -58,7 +55,7 @@ const PostItem = ({ data }) => {
           <div className="flex items-center">
             <div className="flex items-center flex-1 gap-5">
               <PostLike />
-              <PostComment />
+              <PostComment data={data} />
               <PostShare />
             </div>
             <PostSave />
