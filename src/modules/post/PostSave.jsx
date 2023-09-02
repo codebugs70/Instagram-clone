@@ -1,10 +1,18 @@
 import React from "react";
 import { FiBookmark } from "react-icons/fi";
+import { FaBookmark } from "react-icons/fa";
+import useSavePost from "../../hooks/useSavePost";
 
-const PostSave = () => {
+const PostSave = ({ data }) => {
+  const { isSaved, handleSavePost } = useSavePost(data?.postId);
+
   return (
-    <span className="text-2xl cursor-pointer hover:opacity-70">
-      <FiBookmark />
+    <span onClick={handleSavePost} className="cursor-pointer hover:opacity-70">
+      {isSaved ? (
+        <FaBookmark className="text-2xl text-BlueForst" />
+      ) : (
+        <FiBookmark className="text-2xl" />
+      )}
     </span>
   );
 };

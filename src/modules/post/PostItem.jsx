@@ -59,7 +59,7 @@ const PostItem = ({ data }) => {
             </div>
             <div className="flex items-center gap-3">
               <PostShare />
-              <PostSave />
+              <PostSave data={data} />
             </div>
           </div>
         </section>
