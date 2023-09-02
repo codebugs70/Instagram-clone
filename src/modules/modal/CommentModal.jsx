@@ -4,7 +4,7 @@ import CommentItem, { CommentItemSkeleton } from "../comment/CommentItem";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { AiOutlineSend } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PostImage from "../post/PostImage";
 import useHandleChange from "../../hooks/useHandleChange";
 import {
@@ -19,14 +19,15 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../components/loading/Loading";
 import useFetchSubCollection from "../../hooks/useFetchSubCollection";
 import { v4 } from "uuid";
+import { setCmtData, setIsUpdateCmt } from "../../redux/features/postSlice";
 /* ====================================================== */
 
 const CommentModal = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
-  const { postData, cmtData } = useSelector((state) => state.post);
+  const { postData, cmtData, isUpdateCmt } = useSelector((state) => state.post);
   const [isLoading, setIsLoading] = useState(false);
-  const [isUpdateCmt, setIsUpdateCmt] = useState(false);
   const { value, setValue, onChangeVal } = useHandleChange();
 
   const { data: commentList, isLoading: pending } = useFetchSubCollection(
@@ -38,7 +39,6 @@ const CommentModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (!cmtData) return;
     setValue(cmtData?.comment);
-    setIsUpdateCmt(true);
   }, [cmtData, setValue]);
 
   const handleSubmit = (e) => {
@@ -51,8 +51,9 @@ const CommentModal = ({ isOpen, onClose }) => {
   };
 
   const handleUpdateCmt = async () => {
-    if (!cmtData) navigate("/");
+    if (!cmtData) return;
     setIsLoading(true);
+
     try {
       const cmtDocRef = doc(
         db,
@@ -66,7 +67,8 @@ const CommentModal = ({ isOpen, onClose }) => {
       });
 
       setValue("");
-      setIsUpdateCmt(false);
+      dispatch(setIsUpdateCmt(false));
+      dispatch(setCmtData(null));
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -75,7 +77,7 @@ const CommentModal = ({ isOpen, onClose }) => {
 
   const handleAddCmt = async () => {
     if (!value.trim()) return;
-    if (!currentUser.userId) {
+    if (!currentUser?.userId) {
       navigate("/sign-in");
       return;
     }
@@ -135,7 +137,7 @@ const CommentModal = ({ isOpen, onClose }) => {
                 ></PostImage>
 
                 {/* Comment */}
-                <section className="relative border-l border-text_3">
+                <section className="relative border-l border-LightGray dark:border-slate-600">
                   <ul className="flex flex-col gap-1 max-h-[670px] overflow-x-auto">
                     {pending &&
                       Array(5)
@@ -150,7 +152,7 @@ const CommentModal = ({ isOpen, onClose }) => {
 
                   <form
                     onSubmit={handleSubmit}
-                    className="flex items-center absolute bottom-0 w-full justify-center gap-2 bg-[#eee] border-t border-slate-500 dark:bg-Charcoal"
+                    className="absolute bottom-0 flex items-center justify-center w-full gap-2 border-t dark:border-slate-600 bg-SilverMist border-LightGray dark:bg-Charcoal"
                   >
                     <input
                       value={value}
@@ -165,7 +167,6 @@ const CommentModal = ({ isOpen, onClose }) => {
                       {isLoading ? (
                         <Loading
                           className="mr-2"
-                          borderColor="border-BlueForst"
                           size="w-[20px] h-[20px]"
                           borderSize="border-t-2 border-2"
                         />

@@ -6,26 +6,32 @@ import PostPreviewItem, {
   PostPreviewItemSkeleton,
 } from "../modules/post/PostPreviewItem";
 import Button from "../components/button/Button";
-import { useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { BsBookmarkPlus } from "react-icons/bs";
 import { v4 } from "uuid";
+import { useSelector } from "react-redux";
 /* ====================================================== */
-
-const tabOptions = [
-  { name: "Posts", icon: <MdOutlinePostAdd /> },
-  { name: "Saved", icon: <BsBookmarkPlus /> },
-];
 
 const Profile = () => {
   const { slug } = useParams();
-  const [selected, setSelected] = useState("Posts");
+  const location = useLocation();
+  const { currentUser } = useSelector((state) => state.user);
   const { data: user } = useQuerySnapshot("users", "slug", slug);
+  const [selected, setSelected] = useState("Posts");
+
   const { data: posts, isLoading } = useQueryCollection(
     "posts",
     "userId",
     user?.userId
   );
+
+  const tabOptions = [
+    { name: "Posts", icon: <MdOutlinePostAdd />, href: `/${slug}` },
+    { name: "Saved", icon: <BsBookmarkPlus />, href: `/${slug}/saved` },
+  ];
+
+  const isSavedRoute = location.pathname === `/${slug}/saved`;
 
   return (
     <section className="px-6">
@@ -35,9 +41,12 @@ const Profile = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-6">
             <h1 className="text-lg">{user?.username}</h1>
-            <Button className="text-sm" size="small" variant="secondary">
-              Edit profile
-            </Button>
+
+            {currentUser?.userId === user?.userId && (
+              <Button className="text-sm" size="small" variant="secondary">
+                Edit profile
+              </Button>
+            )}
           </div>
 
           <div className="flex items-center gap-5">
@@ -64,7 +73,8 @@ const Profile = () => {
       <ul className="flex items-center gap-5 mt-6">
         {tabOptions.map((item) => {
           return (
-            <li
+            <Link
+              to={`${item.href}`}
               onClick={() => setSelected(item.name)}
               className={`${
                 selected === item.name
@@ -75,22 +85,26 @@ const Profile = () => {
             >
               <span className="text-xl">{item.icon}</span>
               {item.name}
-            </li>
+            </Link>
           );
         })}
       </ul>
 
       <div className="my-10">
-        <ul className="grid grid-cols-3 gap-1">
-          {isLoading &&
-            Array(9)
-              .fill(0)
-              .map(() => <PostPreviewItemSkeleton key={v4()} />)}
+        {!isSavedRoute && (
+          <ul className="grid grid-cols-3 gap-1">
+            {isLoading &&
+              Array(9)
+                .fill(0)
+                .map(() => <PostPreviewItemSkeleton key={v4()} />)}
 
-          {!isLoading &&
-            posts.length > 0 &&
-            posts.map((post) => <PostPreviewItem key={v4()} data={post} />)}
-        </ul>
+            {!isLoading &&
+              posts.length > 0 &&
+              posts.map((post) => <PostPreviewItem key={v4()} data={post} />)}
+          </ul>
+        )}
+
+        <Outlet />
       </div>
     </section>
   );

@@ -103,7 +103,6 @@ const UpdatePostModal = ({ isOpen, onClose }) => {
                     {isLoading ? (
                       <Loading
                         className="mr-2"
-                        borderColor="border-BlueForst"
                         size="w-[20px] h-[20px]"
                         borderSize="border-t-2 border-2"
                       />

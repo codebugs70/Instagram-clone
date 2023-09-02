@@ -31,6 +31,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
 
   // Create new post
   const handleCreatePost = async () => {
+    if (!images) return;
     if (!currentUser.userId) {
       navigate("/sign-in");
       return;
@@ -88,7 +89,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className=" w-full max-w-[910px]  transition-all rounded-md shadow-xl ">
-                <section className="flex items-center justify-between p-3 text-lg font-semibold bg-white border-b border-slate-600 rounded-tl-md rounded-tr-md dark:bg-SlateGray">
+                <section className="flex items-center justify-between p-3 text-lg font-semibold bg-white border-b dark:border-slate-600 border-LightGray rounded-tl-md rounded-tr-md dark:bg-SlateGray">
                   <h1 className="text-black dark:text-white">
                     Create new post
                   </h1>
@@ -101,7 +102,6 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                     {isLoading ? (
                       <Loading
                         className="mr-2"
-                        borderColor="border-BlueForst"
                         size="w-[20px] h-[20px]"
                         borderSize="border-t-2 border-2"
                       />
@@ -131,7 +131,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                     )}
                   </div>
 
-                  <div className="w-full p-3 border-l border-slate-600">
+                  <div className="w-full p-3 border-l border-LightGray dark:border-slate-600">
                     <div className="flex items-center gap-2">
                       <UserAvatar size="sm" avatar={currentUser?.photoURL} />
                       <h1 className="font-medium">{currentUser?.username}</h1>

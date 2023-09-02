@@ -1,13 +1,21 @@
 import React from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import useLikePost from "../../hooks/useLikePost";
+/* ====================================================== */
 
-const PostLike = () => {
+const PostLike = ({ data }) => {
+  const { isLiked, likeCount, handleLikePost } = useLikePost(data?.postId);
+
+  if (!data) return null;
   return (
     <div className="flex items-center gap-2">
-      <span className="text-2xl cursor-pointer hover:opacity-70">
-        <AiOutlineHeart />
+      <span
+        onClick={handleLikePost}
+        className="text-2xl cursor-pointer hover:opacity-70"
+      >
+        {isLiked ? <AiFillHeart color="red" /> : <AiOutlineHeart />}
       </span>
-      <span>18</span>
+      <span>{likeCount.length || 0}</span>
     </div>
   );
 };

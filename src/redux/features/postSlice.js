@@ -6,6 +6,7 @@ export const postSlice = createSlice({
     post: [],
     postData: {},
     cmtData: {},
+    isUpdateCmt: false,
   },
   reducers: {
     setPostData: (state, action) => {
@@ -14,8 +15,11 @@ export const postSlice = createSlice({
     setCmtData: (state, action) => {
       state.cmtData = action.payload;
     },
+    setIsUpdateCmt: (state, action) => {
+      state.isUpdateCmt = action.payload;
+    },
   },
 });
 
-export const { setPostData, setCmtData } = postSlice.actions;
+export const { setPostData, setCmtData, setIsUpdateCmt } = postSlice.actions;
 export default postSlice.reducer;

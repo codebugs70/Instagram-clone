@@ -7,33 +7,38 @@ import { Link } from "react-router-dom";
 import PopupCmt from "../modal/PopupCmt";
 import useToggle from "../../hooks/useToggle";
 import { useSelector } from "react-redux";
+import { formatDateTime } from "../../utils";
 
 const CommentItem = ({ data }) => {
   const { data: userData } = useQuerySnapshot("users", "userId", data?.userId);
   const { currentUser } = useSelector((state) => state.user);
   const { toggle: showModal, handleToggle: handleShowModal } = useToggle();
+  const date = formatDateTime(data?.createdAt);
 
   if (!userData || !data) return;
   return (
     <>
-      <li className="flex items-start w-full gap-3 p-3 hover:bg-white hover:bg-opacity-5">
+      <li className="flex items-start w-full gap-3 p-3 hover:bg-PaleGray dark:hover:bg-white dark:hover:bg-opacity-5">
         <UserAvatar size="sm" avatar={userData?.photoURL} />
         <div>
-          <Link
-            to={`/${userData.slug}`}
-            className="mb-1 font-semibold cursor-pointer hover:text-ElectricBlue text-BlueForst"
-          >
-            {userData?.username}
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to={`/${userData.slug}`}
+              className="mb-1 font-semibold cursor-pointer hover:text-ElectricBlue text-BlueForst"
+            >
+              {userData?.username}
+            </Link>
+            <span className="text-sm text-slate-300">{date}</span>
+          </div>
 
-          <span className="w-full max-w-md ml-2 text-sm font-normal break-all text-MidnightSlate dark:text-slate-200">
+          <p className="w-full max-w-md text-sm font-normal break-all text-MidnightSlate dark:text-slate-200">
             {data?.comment}
-          </span>
+          </p>
 
           {currentUser?.userId === data?.userId && (
             <div
               onClick={handleShowModal}
-              className="mt-1 text-sm text-white cursor-pointer hover:text-BlueForst"
+              className="mt-1 text-sm cursor-pointer text-MidnightSlate dark:text-white hover:text-BlueForst"
             >
               <BsThreeDots />
             </div>

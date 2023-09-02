@@ -4,10 +4,16 @@ import CommentModal from "../modal/CommentModal";
 import useToggle from "../../hooks/useToggle";
 import { useDispatch } from "react-redux";
 import { setPostData } from "../../redux/features/postSlice";
+import useFetchSubCollection from "../../hooks/useFetchSubCollection";
 
 const PostComment = ({ data }) => {
   const dispatch = useDispatch();
   const { toggle: showModal, handleToggle: handleShowModal } = useToggle();
+  const { data: commnentCount } = useFetchSubCollection(
+    "posts",
+    data?.postId,
+    "comments"
+  );
 
   const toggleModal = (postData) => {
     handleShowModal();
@@ -23,7 +29,7 @@ const PostComment = ({ data }) => {
         >
           <FaRegComment />
         </span>
-        <span>7</span>
+        <span>{commnentCount.length}</span>
       </div>
 
       <CommentModal isOpen={showModal} onClose={handleShowModal} />

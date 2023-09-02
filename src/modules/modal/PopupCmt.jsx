@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { toastOptions } from "../../constant";
 import { toast } from "react-toastify";
-import { setCmtData } from "../../redux/features/postSlice";
+import { setCmtData, setIsUpdateCmt } from "../../redux/features/postSlice";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -33,6 +33,7 @@ const PopupCmt = ({ isOpen, onClose, cmtData }) => {
 
   const handleClick = () => {
     dispatch(setCmtData(cmtData));
+    dispatch(setIsUpdateCmt(true));
     onClose();
   };
 
@@ -90,7 +91,7 @@ const PopupCmt = ({ isOpen, onClose, cmtData }) => {
                           className={`${
                             item.color ||
                             "text-MidnightSlate dark:text-slate-200"
-                          } w-full py-5 font-medium text-center cursor-pointer hover:bg-[#eee]  dark:hover:bg-white dark:hover:bg-opacity-5`}
+                          } w-full py-5 font-medium text-center cursor-pointer hover:bg-PaleGray dark:hover:bg-white dark:hover:bg-opacity-5`}
                           key={item.title}
                         >
                           {item.title}

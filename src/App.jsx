@@ -10,6 +10,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 const Notification = lazy(() => import("./pages/Notification"));
 const Home = lazy(() => import("./pages/Home"));
 const Explore = lazy(() => import("./pages/Explore"));
+const Saved = lazy(() => import("./pages/Saved"));
 /* ====================================================== */
 
 function App() {
@@ -33,7 +34,10 @@ function App() {
         <Route element={<SecondLayout />}>
           <Route path="/explore" element={<Explore />} />
           <Route path="/notification" element={<Notification />} />
-          <Route path={`/:slug`} element={<Profile />} />
+
+          <Route path={`/:slug`} element={<Profile />}>
+            <Route path="saved" element={<Saved />} />
+          </Route>
         </Route>
       </Routes>
     </Suspense>

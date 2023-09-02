@@ -1,6 +1,7 @@
 import useToggle from "../../hooks/useToggle";
 import UserAvatar from "../user/UserAvatar";
 import useQuerySnapshot from "../../hooks/useQuerySnapshot";
+import Skeleton from "../../components/loading/Skeleton";
 import React from "react";
 import PropTypes from "prop-types";
 import PostShare from "./PostShare";
@@ -11,7 +12,6 @@ import PostImage from "./PostImage";
 import PostComment from "./PostComment";
 import { formatDateTime } from "../../utils";
 import { BsThreeDots } from "react-icons/bs";
-import Skeleton from "../../components/loading/Skeleton";
 /* ====================================================== */
 
 const PostItem = ({ data }) => {
@@ -54,11 +54,13 @@ const PostItem = ({ data }) => {
         <section className="py-3 border-b border-slate-500">
           <div className="flex items-center">
             <div className="flex items-center flex-1 gap-5">
-              <PostLike />
+              <PostLike data={data} />
               <PostComment data={data} />
-              <PostShare />
             </div>
-            <PostSave />
+            <div className="flex items-center gap-3">
+              <PostShare />
+              <PostSave />
+            </div>
           </div>
         </section>
       </article>

@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 
 const Skeleton = ({ className = "", color = "" }) => {
   return (
-    <div className={`animate-pulse bg-SlateGray ${className} ${color}`}></div>
+    <div
+      className={`animate-pulse bg-LightGray dark:bg-SlateGray ${className} ${color}`}
+    ></div>
   );
 };
 

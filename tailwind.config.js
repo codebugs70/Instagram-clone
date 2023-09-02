@@ -14,6 +14,10 @@ module.exports = {
         MidnightSlate: "#283943",
         RaspberryRed: "#ed4956",
 
+        SilverMist: "#f5f5f5",
+        PaleGray: "#eee",
+        LightGray: "#D3D3D3",
+
         text_3: "#808191",
       },
     },
