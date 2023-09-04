@@ -26,3 +26,8 @@ export const SigninValidationSchema = yup.object({
     .max(30, "Password too long")
     .required("Please enter your password"),
 });
+
+export const UserValidation = yup.object({
+  username: yup.string().min(3).max(20).required("Please enter your username"),
+  slug: yup.string().min(3).max(10).required("Please enter your slug"),
+});

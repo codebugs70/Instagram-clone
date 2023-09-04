@@ -87,7 +87,7 @@ const CommentModal = ({ isOpen, onClose }) => {
       const cmtRef = collection(db, "posts", postData?.postId, "comments");
       const cmtDocRef = await addDoc(cmtRef, {
         comment: value,
-        userId: postData?.userId,
+        userId: currentUser?.userId,
         postId: postData?.postId,
         createdAt: serverTimestamp(),
       });

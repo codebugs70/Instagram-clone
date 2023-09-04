@@ -52,7 +52,11 @@ const Button = ({
       } font-medium rounded-md`}
     >
       {isLoading ? (
-        <Loading borderSize="border-2 border-t-2" size="w-[20px] h-[20px]" />
+        <Loading
+          className="border-white"
+          borderSize="border-2 border-t-2"
+          size="w-[20px] h-[20px]"
+        />
       ) : (
         children
       )}

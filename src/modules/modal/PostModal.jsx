@@ -134,11 +134,11 @@ PostModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   postData: PropTypes.shape({
-    createdAt: PropTypes.object.isRequired,
-    postId: PropTypes.string.isRequired,
-    postImages: PropTypes.arrayOf(PropTypes.string).isRequired,
-    content: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
+    createdAt: PropTypes.object,
+    postId: PropTypes.string,
+    postImages: PropTypes.arrayOf(PropTypes.string),
+    content: PropTypes.string,
+    userId: PropTypes.string,
   }),
 };
 

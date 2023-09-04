@@ -11,6 +11,8 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import { BsBookmarkPlus } from "react-icons/bs";
 import { v4 } from "uuid";
 import { useSelector } from "react-redux";
+import UpdateUserModal from "../modules/modal/UpdateUserModal";
+import useToggle from "../hooks/useToggle";
 /* ====================================================== */
 
 const Profile = () => {
@@ -18,6 +20,7 @@ const Profile = () => {
   const location = useLocation();
   const { currentUser } = useSelector((state) => state.user);
   const { data: user } = useQuerySnapshot("users", "slug", slug);
+  const { toggle: showModal, handleToggle: handleShowModal } = useToggle();
   const [selected, setSelected] = useState("Posts");
 
   const { data: posts, isLoading } = useQueryCollection(
@@ -32,7 +35,6 @@ const Profile = () => {
   ];
 
   const isSavedRoute = location.pathname === `/${slug}/saved`;
-
   return (
     <section className="px-6">
       <div className="flex items-start gap-14">
@@ -43,7 +45,12 @@ const Profile = () => {
             <h1 className="text-lg">{user?.username}</h1>
 
             {currentUser?.userId === user?.userId && (
-              <Button className="text-sm" size="small" variant="secondary">
+              <Button
+                onClick={handleShowModal}
+                className="text-sm"
+                size="small"
+                variant="secondary"
+              >
                 Edit profile
               </Button>
             )}
@@ -70,25 +77,27 @@ const Profile = () => {
 
       <div className="w-full h-[1px] bg-slate-700 mt-10"></div>
 
-      <ul className="flex items-center gap-5 mt-6">
-        {tabOptions.map((item) => {
-          return (
-            <Link
-              to={`${item.href}`}
-              onClick={() => setSelected(item.name)}
-              className={`${
-                selected === item.name
-                  ? "dark:bg-white bg-BlueForst hover:bg-ElectricBlue text-white dark:text-black dark:hover:bg-opacity-80  border-transparent"
-                  : "border-black dark:border-white border dark:hover:bg-white dark:hover:bg-opacity-20 dark:text-white"
-              } flex items-center gap-2 px-6 py-3 font-medium transition-all rounded-lg cursor-pointer border`}
-              key={item.name}
-            >
-              <span className="text-xl">{item.icon}</span>
-              {item.name}
-            </Link>
-          );
-        })}
-      </ul>
+      {currentUser?.userId === user?.userId && (
+        <ul className="flex items-center gap-5 mt-6">
+          {tabOptions.map((item) => {
+            return (
+              <Link
+                to={`${item.href}`}
+                onClick={() => setSelected(item.name)}
+                className={`${
+                  selected === item.name
+                    ? "dark:bg-white bg-BlueForst hover:bg-ElectricBlue text-white dark:text-black dark:hover:bg-opacity-80  border-transparent"
+                    : "border-black dark:border-white border dark:hover:bg-white dark:hover:bg-opacity-20 dark:text-white"
+                } flex items-center gap-2 px-6 py-3 font-medium transition-all rounded-lg cursor-pointer border`}
+                key={item.name}
+              >
+                <span className="text-xl">{item.icon}</span>
+                {item.name}
+              </Link>
+            );
+          })}
+        </ul>
+      )}
 
       <div className="my-10">
         {!isSavedRoute && (
@@ -106,6 +115,8 @@ const Profile = () => {
 
         <Outlet />
       </div>
+
+      <UpdateUserModal isOpen={showModal} onClose={handleShowModal} />
     </section>
   );
 };

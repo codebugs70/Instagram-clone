@@ -3,6 +3,8 @@ import Button from "../../components/button/Button";
 import UserItem, { UserItemSkeleton } from "../../modules/user/UserItem";
 import useFetchCollection from "../../hooks/useFetchCollection";
 import { v4 } from "uuid";
+import { Link } from "react-router-dom";
+/* ====================================================== */
 
 const RightSidebar = () => {
   const { data: users, isLoading } = useFetchCollection("users");
@@ -17,13 +19,14 @@ const RightSidebar = () => {
             .fill(0)
             .map(() => <UserItemSkeleton key={v4()} />)}
 
-        {!isLoading &&
-          users.map((user) => <UserItem key={user.userId} data={user} />)}
+        {!isLoading && users.map((user) => <UserItem key={v4()} data={user} />)}
       </ul>
 
-      <Button className="w-full mt-5" size="normal" variant="primary">
-        See more
-      </Button>
+      <Link to="/search">
+        <Button className="w-full mt-5" size="normal" variant="primary">
+          See more
+        </Button>
+      </Link>
 
       <div className="mt-5 text-xs text-slate-500">
         <p className="leading-relaxed ">

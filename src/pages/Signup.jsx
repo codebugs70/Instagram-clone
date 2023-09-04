@@ -10,7 +10,12 @@ import { toast } from "react-toastify";
 import { SignupValidationSchema } from "../utils/valdition";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../utils/firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { profileImage } from "../constant";
 /* ====================================================== */
 
@@ -35,15 +40,17 @@ const Signup = () => {
     if (!isValid) return;
     try {
       createUserWithEmailAndPassword(auth, data.email, data.password);
-      const currentUser = auth.currentUser;
 
       const userRef = collection(db, "users");
-      await addDoc(userRef, {
-        userId: currentUser.uid,
+      const userDocRef = await addDoc(userRef, {
         slug: slugify(data.username, { lower: true }),
         photoURL: profileImage,
         createdAt: serverTimestamp(),
         ...data,
+      });
+
+      await updateDoc(userDocRef, {
+        userId: userDocRef.id,
       });
 
       reset({

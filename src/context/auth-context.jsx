@@ -31,7 +31,7 @@ function AuthProvider(props) {
           }
         });
       } else {
-        dispatch(setCurrentUser(null));
+        dispatch(setCurrentUser({}));
       }
     });
   }, [dispatch, navigate]);
