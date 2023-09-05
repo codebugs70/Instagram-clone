@@ -13,6 +13,8 @@ import { v4 } from "uuid";
 import { useSelector } from "react-redux";
 import UpdateUserModal from "../modules/modal/UpdateUserModal";
 import useToggle from "../hooks/useToggle";
+import useFetchSubCollection from "../hooks/useFetchSubCollection";
+import ButtonFollow from "../components/button/ButtonFollow";
 /* ====================================================== */
 
 const Profile = () => {
@@ -27,6 +29,16 @@ const Profile = () => {
     "posts",
     "userId",
     user?.userId
+  );
+  const { data: following } = useFetchSubCollection(
+    "users",
+    user?.userId,
+    "following"
+  );
+  const { data: followers } = useFetchSubCollection(
+    "users",
+    user?.userId,
+    "followers"
   );
 
   const tabOptions = [
@@ -44,7 +56,7 @@ const Profile = () => {
           <div className="flex items-center gap-6">
             <h1 className="text-lg">{user?.username}</h1>
 
-            {currentUser?.userId === user?.userId && (
+            {currentUser?.userId === user?.userId ? (
               <Button
                 onClick={handleShowModal}
                 className="text-sm"
@@ -53,21 +65,23 @@ const Profile = () => {
               >
                 Edit profile
               </Button>
+            ) : (
+              <ButtonFollow uid={user?.userId} />
             )}
           </div>
 
           <div className="flex items-center gap-5">
             <div className="flex items-center gap-1">
-              <span>2</span>
+              <span>{posts.length}</span>
               Posts
             </div>
             <div className="flex items-center gap-1">
-              <span>12</span>
+              <span>{followers.length}</span>
               Followers
             </div>
             <div className="flex items-center gap-1">
-              <span>25</span>
-              Posts
+              <span>{following.length}</span>
+              Following
             </div>
           </div>
 

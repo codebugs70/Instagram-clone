@@ -18,7 +18,7 @@ const Button = ({
       case "secondary":
         return "dark:bg-white dark:hover:bg-opacity-80 hover:bg-opacity-80 bg-blue-500 text-white dark:text-black";
       case "bordered":
-        return "border-BlueForst border hover:border-transparent hover:bg-ElectricBlue text-ElectricBlue hover:text-white";
+        return "dark:border-white border-ElectricBlue hover:bg-ElectricBlue hover:text-white text-ElectricBlue border hover:border-transparent dark:hover:bg-white dark:text-white dark:hover:text-black transition-all";
 
       default:
         return "";

@@ -12,6 +12,7 @@ import PostImage from "./PostImage";
 import PostComment from "./PostComment";
 import { formatDateTime } from "../../utils";
 import { BsThreeDots } from "react-icons/bs";
+import { Link } from "react-router-dom";
 /* ====================================================== */
 
 const PostItem = ({ data }) => {
@@ -28,7 +29,12 @@ const PostItem = ({ data }) => {
             <UserAvatar avatar={userData?.photoURL} size="sm" />
             <div>
               <div className="flex items-center gap-2">
-                <h4 className="text-sm font-semibold">{userData.username}</h4>
+                <Link
+                  to={`/${userData?.slug}`}
+                  className="text-sm font-semibold"
+                >
+                  {userData.username}
+                </Link>
                 <span className="text-lg font-bold">.</span>
                 <span className="text-sm text-MidnightSlate dark:text-slate-300">
                   {date}

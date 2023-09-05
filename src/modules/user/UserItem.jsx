@@ -1,8 +1,9 @@
-import React from "react";
-import Button from "../../components/button/Button";
 import UserAvatar from "./UserAvatar";
-import { Link } from "react-router-dom";
 import Skeleton from "../../components/loading/Skeleton";
+import React from "react";
+import ButtonFollow from "../../components/button/ButtonFollow";
+import { Link } from "react-router-dom";
+/* ====================================================== */
 
 const UserItem = ({ data }) => {
   return (
@@ -13,9 +14,7 @@ const UserItem = ({ data }) => {
           {data?.username}
         </Link>
       </div>
-      <Button className="text-xs " size="small" variant="secondary">
-        Follow
-      </Button>
+      <ButtonFollow uid={data?.userId} />
     </li>
   );
 };

@@ -28,7 +28,6 @@ const MenuDropdown = () => {
 
   const links = [
     { label: "Settings", icon: <AiOutlineSetting /> },
-    { label: "Saved", href: "/saved", icon: <BsBookmarkCheck /> },
     {
       label: "Theme",
       icon: darkMode ? <FaMoon /> : <BsSun />,
