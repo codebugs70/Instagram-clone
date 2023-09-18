@@ -16,7 +16,7 @@ const NavItem = ({ icon, link, path, onClick = () => {} }) => {
         }
       >
         <span className="text-2xl ">{icon}</span>
-        <span className="text-lg ">{link}</span>
+        <span className="text-lg">{link}</span>
       </NavLink>
     );
   }

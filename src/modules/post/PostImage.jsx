@@ -17,12 +17,12 @@ const PostImage = ({
       grabCursor={true}
       navigation={true}
       modules={[Navigation]}
-      className="rounded-sm mySwiper"
+      className="rounded-sm mySwiper "
     >
       {images.length > 0 &&
         images.map((item) => (
-          <SwiperSlide key={v4()}>
-            <img className={`${className}`} src={item} alt="post-image" />
+          <SwiperSlide clas key={v4()}>
+            <img className={`${className} `} src={item} alt="post-image" />
           </SwiperSlide>
         ))}
     </Swiper>

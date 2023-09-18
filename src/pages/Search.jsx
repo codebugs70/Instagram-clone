@@ -15,8 +15,8 @@ const Search = () => {
   );
 
   return (
-    <section>
-      <div className="w-full">
+    <section className="px-3 md:px-0">
+      <div className="w-full ">
         <input
           value={value}
           type="text"
@@ -34,9 +34,7 @@ const Search = () => {
 
         {!isLoading &&
           filteredUser.length > 0 &&
-          filteredUser.map((user) => (
-            <UserItem key={user.userId} data={user} />
-          ))}
+          filteredUser.map((user) => <UserItem key={v4()} data={user} />)}
       </ul>
     </section>
   );

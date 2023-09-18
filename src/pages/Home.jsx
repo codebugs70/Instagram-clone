@@ -11,8 +11,8 @@ const Home = () => {
   // console.log(currentUser);
 
   return (
-    <main className="w-full max-w-[470px] mx-auto">
-      <ul className="flex flex-col gap-5">
+    <main className="w-full max-w-3xl lg:max-w-[470px] mx-auto pb-20 md:pb-0">
+      <ul className="flex flex-col gap-5 px-2 md:px-5 lg:px-0">
         {isLoading &&
           Array(6)
             .fill(0)

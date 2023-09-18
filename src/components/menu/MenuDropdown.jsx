@@ -2,7 +2,7 @@ import React from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
-import { BsBookmarkCheck, BsSun } from "react-icons/bs";
+import { BsSun } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { Fragment } from "react";
@@ -11,13 +11,10 @@ import { useTheme } from "../../context/theme-context";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../utils/firebase";
 import { signOut } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../redux/features/userSlice";
 
 /* ====================================================== */
 
 const MenuDropdown = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { darkMode, toggleDarkMode } = useTheme();
 
@@ -41,12 +38,12 @@ const MenuDropdown = () => {
   ];
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
-      <Menu.Button className="w-full nav-item">
-        <span className="text-2xl">
+    <Menu as="div" className="relative">
+      <Menu.Button className=" gap-3 p-[12px] md:w-full md:h-full transition-all rounded-md cursor-pointer w-[50px] h-[50px] flex items-center md:justify-start justify-center dark:hover:bg-SlateGray hover:bg-blue-500 hover:bg-opacity-10 hover:text-ElectricBlue dark:hover:text-white">
+        <span className="flex-shrink-0 text-2xl">
           <AiOutlineBars />
         </span>
-        <span className="text-lg ">More</span>
+        <span className="hidden text-lg xl:block">More</span>
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -57,7 +54,7 @@ const MenuDropdown = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute w-full p-2  origin-bottom bg-[#F5F5F5] rounded-md shadow-lg bottom-14 dark:text-white dark:bg-InkyBlack">
+        <Menu.Items className="absolute w-[160px] xl:w-full p-2  origin-bottom  bg-[#F5F5F5] rounded-md shadow-lg bottom-14 dark:text-white dark:bg-InkyBlack">
           {links.map((link) => (
             <Menu.Item key={link.label} as={Fragment}>
               {({ active }) => (
@@ -69,7 +66,7 @@ const MenuDropdown = () => {
                   } nav-item`}
                 >
                   <span className="text-xl">{link.icon}</span>
-                  <span className="text-lg">{link.label}</span>
+                  <span className=" xl:text-lg">{link.label}</span>
                 </li>
               )}
             </Menu.Item>

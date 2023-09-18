@@ -78,7 +78,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
             <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" />
           </Transition.Child>
 
-          <div className="fixed inset-0 flex items-center justify-center w-full max-w-6xl mx-auto">
+          <div className="fixed inset-0 flex items-center justify-center w-full max-w-6xl px-5 mx-auto lg:px-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -88,7 +88,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className=" w-full max-w-[910px]  transition-all rounded-md shadow-xl ">
+              <Dialog.Panel className=" w-full max-w-xl lg:max-w-[910px]  transition-all rounded-md shadow-xl ">
                 <section className="flex items-center justify-between p-3 text-lg font-semibold bg-white border-b dark:border-slate-600 border-LightGray rounded-tl-md rounded-tr-md dark:bg-SlateGray">
                   <h1 className="text-black dark:text-white">
                     Create new post
@@ -114,8 +114,8 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                   </div>
                 </section>
 
-                <section className="grid min-h-[567px] grid-cols-[minmax(567px,_auto)_1fr] bg-white dark:bg-SlateGray rounded-bl-md rounded-br-md">
-                  <div className="flex items-center justify-center">
+                <section className="flex flex-col-reverse  lg:grid lg:min-h-[567px] lg:grid-cols-[minmax(567px,_auto)_1fr] bg-white dark:bg-SlateGray rounded-bl-md rounded-br-md">
+                  <div className="flex items-center justify-center min-h-[250px] md:min-h-[350px]">
                     {loading && <Loading />}
 
                     {!loading && images.length === 0 && (
@@ -131,7 +131,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                     )}
                   </div>
 
-                  <div className="w-full p-3 border-l border-LightGray dark:border-slate-600">
+                  <div className="w-full p-3 lg:border-l border-LightGray dark:border-slate-600">
                     <div className="flex items-center gap-2">
                       <UserAvatar size="sm" avatar={currentUser?.photoURL} />
                       <h1 className="font-medium">{currentUser?.username}</h1>
@@ -139,7 +139,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                     <textarea
                       value={value}
                       onChange={onChangeVal}
-                      className="w-full mt-4 p-2 bg-transparent outline-none resize-none min-h-[350px]"
+                      className="w-full mt-4 p-2 bg-transparent outline-none resize-none  lg:min-h-[350px]"
                       placeholder="Enter description...."
                     />
                   </div>

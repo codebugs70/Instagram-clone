@@ -1,17 +1,16 @@
 import React from "react";
-import { AiOutlineHome, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { IoSearch } from "react-icons/io5";
 import { MdOutlineExplore, MdOutlineDashboardCustomize } from "react-icons/md";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import MenuDropdown from "../menu/MenuDropdown";
 import UserAvatar from "../../modules/user/UserAvatar";
-import NavItem from "../nav/NavItem";
 import useToggle from "../../hooks/useToggle";
 import CreatePostModal from "../../modules/modal/CreatePostModal";
 /* ====================================================== */
 
-const LeftSidebar = () => {
+const LeftSidebarMobile = () => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const { toggle: showModal, handleToggle: handleShowModal } = useToggle();
@@ -51,35 +50,41 @@ const LeftSidebar = () => {
 
   return (
     <React.Fragment>
-      <section className="w-[250px] xl:flex hidden sticky top-0  flex-col  bg-white shadow-xl dark:bg-black border-r h-screen border-[#ccc] dark:border-SlateGray p-5">
+      <section className="w-[80px] sticky top-0 z-[999]  hidden lg:flex xl:hidden flex-col items-center justify-center  bg-white shadow-xl dark:bg-black border-r h-screen border-[#ccc] dark:border-SlateGray p-5">
         <Link to="/" className="flex items-center gap-2">
           <div className="w-[40px] h-[40px]">
             <img src="/logo.png" className="img-cover" alt="" />
           </div>
-          <h1 className="text-2xl font-bold ">Instagram</h1>
         </Link>
 
         <ul className="flex flex-col flex-1 gap-3 mt-8">
           {sidebarLinks.map((item) => {
-            if (item.onClick) {
+            if (item.path && typeof item.path === "string") {
               return (
-                <NavItem
+                <NavLink
                   key={item.link}
-                  icon={item.icon}
-                  link={item.link}
-                  onClick={item.onClick}
-                />
+                  to={`${item.path}`}
+                  className={({ isActive }) =>
+                    `${
+                      isActive
+                        ? "bg-BlueForst text-white dark:bg-SlateGray font-semibold"
+                        : "hover:bg-blue-500 dark:hover:text-white hover:bg-opacity-10 hover:text-ElectricBlue dark:hover:bg-SlateGray "
+                    } transition-all rounded-md cursor-pointer w-[50px] h-[50px] flex items-center justify-center`
+                  }
+                >
+                  <span className="text-2xl">{item.icon}</span>
+                </NavLink>
               );
             }
 
             return (
-              <NavItem
+              <li
                 key={item.link}
-                path={item.path}
-                icon={item.icon}
-                link={item.link}
                 onClick={item.onClick}
-              />
+                className="flex items-center gap-3 w-[50px] h-[50px] justify-center transition-all dark:hover:bg-SlateGray rounded-md cursor-pointer hover:bg-blue-500 hover:bg-opacity-10 hover:text-ElectricBlue dark:hover:text-white"
+              >
+                <span className="text-2xl">{item.icon}</span>
+              </li>
             );
           })}
 
@@ -90,13 +95,10 @@ const LeftSidebar = () => {
                 isActive
                   ? "bg-BlueForst text-white dark:bg-SlateGray font-semibold "
                   : "hover:bg-blue-500 hover:bg-opacity-10 dark:hover:text-white hover:text-ElectricBlue dark:hover:bg-SlateGray "
-              } flex items-center gap-3 p-[12px] transition-all rounded-md cursor-pointer `
+              } transition-all rounded-md cursor-pointer w-[50px] h-[50px] flex items-center justify-center`
             }
           >
             <UserAvatar size="xs" avatar={currentUser?.photoURL} />
-            <span className="text-base font-semibold">
-              {currentUser?.username}
-            </span>
           </NavLink>
         </ul>
 
@@ -108,4 +110,4 @@ const LeftSidebar = () => {
   );
 };
 
-export default LeftSidebar;
+export default LeftSidebarMobile;

@@ -54,6 +54,12 @@
   --swiper-theme-color: #0095f6 !important;
 }
 
+.swiper-wrapper {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
   background-color: white;

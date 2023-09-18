@@ -10,7 +10,7 @@ const RightSidebar = () => {
   const { data: users, isLoading } = useFetchCollection("users");
 
   return (
-    <section className="w-[320px] bg-white h-fit dark:bg-black sticky top-10 py-4 px-2 shadow-md rounded-sm">
+    <section className="w-[320px] lg:block hidden bg-white h-fit dark:bg-black sticky top-10 py-4 px-2 shadow-md rounded-sm">
       <h1 className="text-lg font-semibold text-text_3">Suggested for you</h1>
 
       <ul className="flex flex-col gap-5 mt-5">

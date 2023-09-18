@@ -10,7 +10,7 @@ const Explore = () => {
 
   return (
     <section>
-      <ul className="grid grid-cols-3 gap-1">
+      <ul className="grid grid-cols-2 gap-1 px-3 md:px-6 md:grid-cols-3 xl:px-0">
         {isLoading &&
           Array(9)
             .fill(0)

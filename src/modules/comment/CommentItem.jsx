@@ -28,7 +28,9 @@ const CommentItem = ({ data }) => {
             >
               {userData?.username}
             </Link>
-            <span className="text-sm text-slate-300">{date}</span>
+            <span className="text-sm text-MidnightSlate dark:text-slate-300">
+              {date}
+            </span>
           </div>
 
           <p className="w-full max-w-md text-sm font-normal break-all text-MidnightSlate dark:text-slate-200">

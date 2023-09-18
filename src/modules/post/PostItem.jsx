@@ -10,9 +10,9 @@ import PostModal from "../modal/PostModal";
 import PostLike from "./PostLike";
 import PostImage from "./PostImage";
 import PostComment from "./PostComment";
+import { Link } from "react-router-dom";
 import { formatDateTime } from "../../utils";
 import { BsThreeDots } from "react-icons/bs";
-import { Link } from "react-router-dom";
 /* ====================================================== */
 
 const PostItem = ({ data }) => {
@@ -35,8 +35,8 @@ const PostItem = ({ data }) => {
                 >
                   {userData.username}
                 </Link>
-                <span className="text-lg font-bold">.</span>
-                <span className="text-sm text-MidnightSlate dark:text-slate-300">
+                <span className="hidden text-lg font-bold md:block">.</span>
+                <span className="text-[10px] md:text-sm text-MidnightSlate dark:text-slate-300">
                   {date}
                 </span>
               </div>
@@ -51,13 +51,13 @@ const PostItem = ({ data }) => {
         </section>
 
         {/* Post content */}
-        <section className="flex flex-col gap-3 mt-5">
-          <p>{data?.content}</p>
+        <section className="flex flex-col h-full gap-2 mt-2 md:mt-5 md:gap-3 ">
+          <p className="text-sm md:text-base">{data?.content}</p>
           <PostImage images={data?.postImages} />
         </section>
 
         {/* Post action */}
-        <section className="py-3 border-b border-slate-500">
+        <section className="py-2 border-b md:py-3 border-slate-500">
           <div className="flex items-center">
             <div className="flex items-center flex-1 gap-5">
               <PostLike data={data} />

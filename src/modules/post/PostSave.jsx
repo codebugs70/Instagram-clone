@@ -9,7 +9,7 @@ const PostSave = ({ data }) => {
   return (
     <span onClick={handleSavePost} className="cursor-pointer hover:opacity-70">
       {isSaved ? (
-        <FaBookmark className="text-2xl text-BlueForst" />
+        <FaBookmark className="text-xl md:text-2xl text-BlueForst" />
       ) : (
         <FiBookmark className="text-2xl" />
       )}

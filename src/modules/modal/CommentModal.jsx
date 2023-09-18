@@ -20,6 +20,7 @@ import Loading from "../../components/loading/Loading";
 import useFetchSubCollection from "../../hooks/useFetchSubCollection";
 import { v4 } from "uuid";
 import { setCmtData, setIsUpdateCmt } from "../../redux/features/postSlice";
+import { IoClose } from "react-icons/io5";
 /* ====================================================== */
 
 const CommentModal = ({ isOpen, onClose }) => {
@@ -107,7 +108,7 @@ const CommentModal = ({ isOpen, onClose }) => {
   return (
     <section>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={onClose}>
+        <Dialog as="div" className="relative z-[999]" onClose={onClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -120,7 +121,7 @@ const CommentModal = ({ isOpen, onClose }) => {
             <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" />
           </Transition.Child>
 
-          <div className="fixed inset-0 flex items-center justify-center w-full max-w-6xl mx-auto">
+          <div className="fixed inset-0 flex items-center justify-center w-full mx-auto lg:max-w-5xl lg:px-5 xl:px-0 xl:max-w-6xl">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -130,15 +131,27 @@ const CommentModal = ({ isOpen, onClose }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="grid grid-cols-2 transition-all bg-white rounded-md shadow-xl dark:bg-InkyBlack">
+              <Dialog.Panel className="w-full max-w-full transition-all bg-white rounded-md shadow-xl lg:grid lg:grid-cols-2 dark:bg-InkyBlack">
                 <PostImage
-                  className="object-contain h-[720px] w-full"
+                  className="object-contain hidden lg:block h-[500px] lg:h-[720px] w-full"
                   images={postData?.postImages}
                 ></PostImage>
 
                 {/* Comment */}
-                <section className="relative border-l border-LightGray dark:border-slate-600">
-                  <ul className="flex flex-col gap-1 max-h-[670px] overflow-x-auto">
+                <section className="relative w-full h-screen lg:h-full lg:border-l border-LightGray dark:border-slate-600">
+                  <div className="flex items-center justify-between px-5 py-2 lg:hidden">
+                    <h1 className="text-xl font-medium md:text-2xl">
+                      Other comments
+                    </h1>
+                    <span
+                      onClick={onClose}
+                      className="flex items-center justify-center hover:bg-opacity-90 cursor-pointer w-[35px] h-[35px] rounded-full bg-RaspberryRed text-white"
+                    >
+                      <IoClose size={22} />
+                    </span>
+                  </div>
+
+                  <ul className="flex flex-col gap-1 overflow-y-auto">
                     {pending &&
                       Array(5)
                         .fill(0)
